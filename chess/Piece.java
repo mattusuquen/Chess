@@ -3,13 +3,13 @@ package chess;
 import chess.ReturnPiece.PieceType;
 
 public abstract class Piece {
-    private Color color;
+    protected Chess.Player color;
 
-    public Piece(Color color){
+    public Piece(Chess.Player color){
         this.color = color;
     }
 
-    public Color getColor() {
+    public Chess.Player getColor() {
         return color;
     }
 

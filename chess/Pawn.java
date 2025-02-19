@@ -1,14 +1,15 @@
 package chess;
 
+import chess.Chess.Player;
 import chess.ReturnPiece.PieceType;
 
 public class Pawn extends Piece {
-    public Pawn(Color color) {
+    public Pawn(Player color) {
         super(color);
     }
 
-    public Color getColor() {
-        return super.getColor();
+    public Player getColor() {
+        return color;
     }
 
     public boolean isValidMove(String move, Board board) {
@@ -17,7 +18,6 @@ public class Pawn extends Piece {
 
     @Override
     public PieceType getPieceType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
+        return color == Player.white ? PieceType.WP : PieceType.BP;
     }
 }
