@@ -3,7 +3,7 @@ package chess;
 import chess.Chess.Player;
 import chess.ReturnPiece.PieceType;
 
-public class Queen extends Piece {
+public class Queen extends Piece{
 
     public Queen(Player color){
         super(color);
@@ -13,7 +13,7 @@ public class Queen extends Piece {
         return color;
     }
 
-    public boolean isValidMove(String move, Board board) {
+    public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
         return true;
     }
 

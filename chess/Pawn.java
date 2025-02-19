@@ -4,6 +4,9 @@ import chess.Chess.Player;
 import chess.ReturnPiece.PieceType;
 
 public class Pawn extends Piece {
+
+    private boolean enpassant = false;
+
     public Pawn(Player color) {
         super(color);
     }
@@ -12,7 +15,7 @@ public class Pawn extends Piece {
         return color;
     }
 
-    public boolean isValidMove(String move, Board board) {
+    public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
         return true;
     }
 

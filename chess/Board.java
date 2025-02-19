@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import chess.Chess.Player;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
+import chess.ReturnPlay.Message;
 
 public class Board {
+
+    private Player turn = Player.white;
     Piece[][] board;
     
     public Board(){
@@ -89,13 +92,33 @@ public class Board {
         }
     }
 
+    public Player getTurn(){
+        return turn;
+    }
+
     public void setPiece(int row, int col, Piece piece){
         board[row][col] = piece;
     }
 
-    public void movePiece(int startRow, int startCol, int endRow, int endCol){
-        Piece pieceToMove = board[startRow][startCol];
+    public Message movePiece(int startRow, int startCol, int endRow, int endCol){
+        Piece pieceToMove = getPiece(startRow, startCol);
+        // Change the ordering on this
+        // Just general idea
+        if (pieceToMove == null) return Message.ILLEGAL_MOVE;                                               // check if there is a piece to move
+        if (!pieceToMove.isTurn(this)) return Message.ILLEGAL_MOVE;                                         // check if it is the turn of the piece
+        if (!pieceToMove.isValidMove(startRow, startCol, endRow, endCol, this)) return Message.ILLEGAL_MOVE;// check if move is valid
+        if (board[endRow][endCol] != null &&                                                                // check if the piece is trying to take its own piece
+            board[endRow][endCol].getColor() == pieceToMove.getColor()) return Message.ILLEGAL_MOVE;
+
+        // if not, move piece
         board[startRow][startCol] = null;
         board[endRow][endCol] = pieceToMove;
+
+        // Turn successful, change turn
+        if (turn == Player.white) turn = Player.black;
+        else turn = Player.white;
+
+        // Piece was moved successfully
+        return null;
     }
 }

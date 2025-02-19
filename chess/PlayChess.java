@@ -37,7 +37,7 @@ public class PlayChess {
 		
 		sc.close();
 	}
-	
+
 	static void printBoard(ArrayList<ReturnPiece> pieces) {
 		String[][] board = makeBlankBoard();
 		if (pieces != null) {

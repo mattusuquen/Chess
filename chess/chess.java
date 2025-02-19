@@ -24,14 +24,13 @@ public class Chess {
 			
 			/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 			/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-			ReturnPlay returnPlay = new ReturnPlay();
 			int startRow = getMove(move)[1];
 			int startCol = getMove(move)[0];
 			int endRow = getMove(move)[3];
 			int endCol = getMove(move)[2];
-			System.out.println(startRow + " " + startCol + " " + endRow + " " + endCol);
-			board.movePiece(startRow, startCol, endRow, endCol);
-			returnPlay.message = null;
+			
+			ReturnPlay returnPlay = new ReturnPlay();
+			returnPlay.message = board.movePiece(startRow, startCol, endRow, endCol);
 			returnPlay.piecesOnBoard = board.getPieces();
 			return returnPlay;
 		}

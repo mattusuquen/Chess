@@ -13,7 +13,7 @@ public class Bishop extends Piece {
         return color;
     }
 
-    public boolean isValidMove(String move, Board board) {
+    public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
         return true;
     }
 
