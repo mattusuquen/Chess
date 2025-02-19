@@ -9,7 +9,6 @@ public class Chess {
 
     enum Player { white, black }
     
-    private Piece[][] board = new Piece[][]
 
 	/**
 	 * Plays the next move for whichever player has the turn.
