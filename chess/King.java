@@ -14,12 +14,20 @@ public class King extends Piece {
     }
 
     public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
+        if (Math.abs(startRow - endRow) > 1 || Math.abs(startCol - endCol) > 1) return false;
         return true;
+        
     }
 
     @Override
     public PieceType getPieceType() {
         return color == Player.white ? PieceType.WK : PieceType.BK;
+    }
+
+    @Override
+    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBlocked'");
     }
     
 }

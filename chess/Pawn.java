@@ -23,4 +23,10 @@ public class Pawn extends Piece {
     public PieceType getPieceType() {
         return color == Player.white ? PieceType.WP : PieceType.BP;
     }
+
+    @Override
+    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBlocked'");
+    }
 }

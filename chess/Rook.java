@@ -13,14 +13,14 @@ public class Rook extends Piece {
         return color;
     }
 
-    private boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board){
+    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board){
         if (startRow == endRow) {
             int min = Math.min(startCol, endCol);
             int max = Math.max(startCol, endCol);
             for (int i = min + 1; i < max; i++) {
                 if (board.getPiece(startRow, i) != null) return true;
             }
-        } else {
+        } else if (startCol == endCol){
             int min = Math.min(startRow, endRow);
             int max = Math.max(startRow, endRow);
             for (int i = min + 1; i < max; i++) {

@@ -22,4 +22,10 @@ public class Bishop extends Piece {
         return color == Player.white ? PieceType.WB : PieceType.BB;
     }
 
+    @Override
+    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBlocked'");
+    }
+
 }
