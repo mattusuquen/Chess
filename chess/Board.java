@@ -19,28 +19,28 @@ public class Board {
 
     public void initializeBoard(){
         board = new Piece[8][8];
-        board[7][0] = new Rook(Player.white);
-        board[7][1] = new Knight(Player.white);
-        board[7][2] = new Bishop(Player.white);
-        board[7][3] = new Queen(Player.white);
-        board[7][4] = new King(Player.white);
-        board[7][5] = new Bishop(Player.white);
-        board[7][6] = new Knight(Player.white);
-        board[7][7] = new Rook(Player.white);
+        board[0][0] = new Rook(Player.white);
+        board[0][1] = new Knight(Player.white);
+        board[0][2] = new Bishop(Player.white);
+        board[0][3] = new Queen(Player.white);
+        board[0][4] = new King(Player.white);
+        board[0][5] = new Bishop(Player.white);
+        board[0][6] = new Knight(Player.white);
+        board[0][7] = new Rook(Player.white);
         for (int i = 0; i < 8; i++) {
-            board[6][i] = new Pawn(Player.white);
+            board[1][i] = new Pawn(Player.white);
         }
 
-        board[0][0] = new Rook(Player.black);
-        board[0][1] = new Knight(Player.black);
-        board[0][2] = new Bishop(Player.black);
-        board[0][3] = new Queen(Player.black);
-        board[0][4] = new King(Player.black);
-        board[0][5] = new Bishop(Player.black);
-        board[0][6] = new Knight(Player.black);
-        board[0][7] = new Rook(Player.black);
+        board[7][0] = new Rook(Player.black);
+        board[7][1] = new Knight(Player.black);
+        board[7][2] = new Bishop(Player.black);
+        board[7][3] = new Queen(Player.black);
+        board[7][4] = new King(Player.black);
+        board[7][5] = new Bishop(Player.black);
+        board[7][6] = new Knight(Player.black);
+        board[7][7] = new Rook(Player.black);
         for (int i = 0; i < 8; i++) {
-            board[1][i] = new Pawn(Player.black);
+            board[6][i] = new Pawn(Player.black);
         }
     }
 
