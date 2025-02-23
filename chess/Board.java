@@ -115,8 +115,7 @@ public class Board {
         board[endRow][endCol] = pieceToMove;
 
         // Turn successful, change turn
-        if (turn == Player.white) turn = Player.black;
-        else turn = Player.white;
+        turn = turn == Player.white ? Player.black : Player.white;
 
         // Piece was moved successfully
         return null;
