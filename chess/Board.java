@@ -48,6 +48,10 @@ public class Board {
         return board[row][col];
     }
 
+    public void setTurn(Player player){
+        turn = player;
+    }
+
     public ArrayList<ReturnPiece> getPieces(){
         ArrayList<ReturnPiece> pieces = new ArrayList<ReturnPiece>();
         for (int i = 0; i < 8; i++) {
@@ -113,10 +117,11 @@ public class Board {
         // if not, move piece
         board[startRow][startCol] = null;
         board[endRow][endCol] = pieceToMove;
+        pieceToMove.move(); // increment move counter
 
         // Turn successful, change turn
         turn = turn == Player.white ? Player.black : Player.white;
-
+        
         // Piece was moved successfully
         return null;
     }
