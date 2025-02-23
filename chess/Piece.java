@@ -21,7 +21,7 @@ public abstract class Piece {
 
     public abstract boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board);
 
-    protected abstract boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board);
+    protected abstract boolean pathIsBlocked(int startRow, int startCol, int endRow, int endCol, Board board);
 
     public abstract PieceType getPieceType();
 }

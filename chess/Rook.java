@@ -13,7 +13,7 @@ public class Rook extends Piece {
         return color;
     }
 
-    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board){
+    protected boolean pathIsBlocked(int startRow, int startCol, int endRow, int endCol, Board board){
         if (startRow == endRow) {
             int min = Math.min(startCol, endCol);
             int max = Math.max(startCol, endCol);
@@ -35,7 +35,7 @@ public class Rook extends Piece {
             System.out.println("Rook can only move in straight lines");
             return false;             // Rook can only move in straight lines
         }
-        if (isBlocked(startRow, startCol, endRow, endCol, board)) return false; // Path is blocked by piece
+        if (pathIsBlocked(startRow, startCol, endRow, endCol, board)) return false; // Path is blocked by piece
         
         return true;
     }

@@ -15,7 +15,7 @@ public class Queen extends Piece{
 
     public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
         if((Math.abs(startRow - endRow) != Math.abs(startCol - endCol)) && (startRow != endRow && startCol != endCol)) return false;
-        if (isBlocked(startRow, startCol, endRow, endCol, board)) return false;
+        if (pathIsBlocked(startRow, startCol, endRow, endCol, board)) return false;
         return true;
     }
 
@@ -25,7 +25,7 @@ public class Queen extends Piece{
     }
 
     @Override
-    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
+    protected boolean pathIsBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
         
         if (startRow == endRow) {
             int min = Math.min(startCol, endCol);
