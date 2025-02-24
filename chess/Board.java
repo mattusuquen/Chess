@@ -122,7 +122,45 @@ public class Board {
         // Turn successful, change turn
         turn = turn == Player.white ? Player.black : Player.white;
         
+        if (isInCheck()) return Message.CHECK;
+        
+
         // Piece was moved successfully
         return null;
+    }
+
+    public boolean isInCheck(){
+        int kingRow = -1;
+        int kingCol = -1;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = board[i][j];
+                if (piece == null) continue;
+                if (piece.getColor() != turn) continue;
+                if (turn == Player.white) {
+                    if (piece.getPieceType() == PieceType.WK){
+                        kingRow = i;
+                        kingCol = j;
+                        break;
+                    }
+                } else {
+                    if (piece.getPieceType() == PieceType.BK){
+                        kingRow = i;
+                        kingCol = j;
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = board[i][j];
+                if (piece == null) continue;
+                if (piece.getColor() == turn) continue;
+                if (piece.isValidMove(i, j, kingRow, kingCol, this)) return true;
+            }
+        }
+        return false;
     }
 }
