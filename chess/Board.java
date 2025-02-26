@@ -106,7 +106,7 @@ public class Board {
     }
 
     public Message movePiece(int startRow, int startCol, int endRow, int endCol){
-        Piece pieceToMove = getPiece(startRow, startCol);
+        Piece pieceToMove = getPiece(startRow, startCol);r
         // Change the ordering on this
         // Just general idea
         if (pieceToMove == null) return Message.ILLEGAL_MOVE;                                               // check if there is a piece to move
@@ -227,7 +227,6 @@ public class Board {
                 if (piece.getColor() == turn) continue;
                 if (piece.isValidMove(i, j, kingRow, kingCol, this)) {
                     // Get piece that puts king in check
-                    System.out.println(getPiece(i, j).getPieceType() + " at " + i + ", " + j + " can take the king at " + kingRow + ", " + kingCol);
                     return true;
                 }
             }
