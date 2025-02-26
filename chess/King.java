@@ -71,9 +71,6 @@ public class King extends Piece {
     }
 
     @Override
-<<<<<<< HEAD
-    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
-=======
     protected boolean pathIsBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
         if (startRow == endRow) {
             int min = Math.min(startCol, endCol);
@@ -82,7 +79,6 @@ public class King extends Piece {
                 if (board.getPiece(startRow, i) != null) return true;
             }
         }
->>>>>>> 5561bbc050e2a831060a0ababcb70de31e61978f
         return false;
     }
     
