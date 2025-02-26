@@ -25,7 +25,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
+    protected boolean pathIsBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isBlocked'");
     }

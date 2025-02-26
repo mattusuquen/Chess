@@ -10,6 +10,7 @@ import chess.ReturnPlay.Message;
 public class Board {
 
     private Player turn = Player.white;
+    private static final int NOT_FOUND = -1;
     Piece[][] board;
     
     public Board(){
@@ -19,33 +20,37 @@ public class Board {
 
     public void initializeBoard(){
         board = new Piece[8][8];
-        board[7][0] = new Rook(Player.white);
-        board[7][1] = new Knight(Player.white);
-        board[7][2] = new Bishop(Player.white);
-        board[7][3] = new Queen(Player.white);
-        board[7][4] = new King(Player.white);
-        board[7][5] = new Bishop(Player.white);
-        board[7][6] = new Knight(Player.white);
-        board[7][7] = new Rook(Player.white);
+        board[0][0] = new Rook(Player.white);
+        board[0][1] = new Knight(Player.white);
+        board[0][2] = new Bishop(Player.white);
+        board[0][3] = new Queen(Player.white);
+        board[0][4] = new King(Player.white);
+        board[0][5] = new Bishop(Player.white);
+        board[0][6] = new Knight(Player.white);
+        board[0][7] = new Rook(Player.white);
         for (int i = 0; i < 8; i++) {
-            board[6][i] = new Pawn(Player.white);
+            board[1][i] = new Pawn(Player.white);
         }
 
-        board[0][0] = new Rook(Player.black);
-        board[0][1] = new Knight(Player.black);
-        board[0][2] = new Bishop(Player.black);
-        board[0][3] = new Queen(Player.black);
-        board[0][4] = new King(Player.black);
-        board[0][5] = new Bishop(Player.black);
-        board[0][6] = new Knight(Player.black);
-        board[0][7] = new Rook(Player.black);
+        board[7][0] = new Rook(Player.black);
+        board[7][1] = new Knight(Player.black);
+        board[7][2] = new Bishop(Player.black);
+        board[7][3] = new Queen(Player.black);
+        board[7][4] = new King(Player.black);
+        board[7][5] = new Bishop(Player.black);
+        board[7][6] = new Knight(Player.black);
+        board[7][7] = new Rook(Player.black);
         for (int i = 0; i < 8; i++) {
-            board[1][i] = new Pawn(Player.black);
+            board[6][i] = new Pawn(Player.black);
         }
     }
 
     public Piece getPiece(int row, int col){
         return board[row][col];
+    }
+
+    public void setTurn(Player player){
+        turn = player;
     }
 
     public ArrayList<ReturnPiece> getPieces(){
@@ -113,12 +118,120 @@ public class Board {
         // if not, move piece
         board[startRow][startCol] = null;
         board[endRow][endCol] = pieceToMove;
+        pieceToMove.move(); // increment move counter
 
         // Turn successful, change turn
-        if (turn == Player.white) turn = Player.black;
-        else turn = Player.white;
+        turn = turn == Player.white ? Player.black : Player.white;
+        
+        if (isCheckmate()) return turn == Player.white ? Message.CHECKMATE_BLACK_WINS : Message.CHECKMATE_WHITE_WINS;
+        if (isStalemate()) return Message.STALEMATE;
+        if (isDraw()) return Message.DRAW;
+        if (isInCheck()) return Message.CHECK;
+        
 
         // Piece was moved successfully
         return null;
+    }
+
+    private int[] findPiece(PieceType pieceType){
+        int[] location = new int[2];
+
+        location[0] = NOT_FOUND;
+        location[1] = NOT_FOUND;
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = board[i][j];
+                if (piece == null) continue;
+                if (piece.getPieceType() == pieceType){
+                    location[0] = i;
+                    location[1] = j;
+                }
+            }
+        }
+        return location;
+    }
+
+    public boolean isCheckmate() {
+        if (!isInCheck()) return false;
+    
+        PieceType kingType = (turn == Player.white) ? PieceType.WK : PieceType.BK;
+        int[] kingPos = findPiece(kingType);
+        
+        int kingRow = kingPos[0];
+        int kingCol = kingPos[1];
+    
+        if (kingRow == NOT_FOUND || kingCol == NOT_FOUND) return false; // Should not happen
+    
+        // Iterate over all the current player's pieces
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = board[i][j];
+                if (piece == null || piece.getColor() != turn) continue;
+    
+                for (int x = 0; x < 8; x++) {
+                    for (int y = 0; y < 8; y++) {
+                        if (piece.isValidMove(i, j, x, y, this)) {
+                            Piece original = board[x][y]; // Store captured piece if any
+                            board[x][y] = piece;
+                            board[i][j] = null; // Move piece temporarily
+    
+                            boolean stillInCheck = isInCheck();
+    
+                            // Undo move
+                            board[i][j] = piece;
+                            board[x][y] = original;
+    
+                            if (!stillInCheck) return false; // Found a legal escape move
+                        }
+                    }
+                }
+            }
+        }
+        return true; // No legal escape moves → Checkmate
+    }
+    
+    public boolean isStalemate() {
+        if (isInCheck()) return false; // Stalemate cannot happen if in check
+    
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = board[i][j];
+                if (piece == null || piece.getColor() != turn) continue;
+    
+                for (int x = 0; x < 8; x++) {
+                    for (int y = 0; y < 8; y++) {
+                        if (piece.isValidMove(i, j, x, y, this)) {
+                            return false; // Found at least one legal move
+                        }
+                    }
+                }
+            }
+        }
+        return true; // No legal moves → stalemate
+    }
+    
+    private boolean isDraw(){
+        return false;
+    }
+
+    public boolean isInCheck(){
+        int[] kingLocation = findPiece(turn == Player.white ? PieceType.WK : PieceType.BK);
+        int kingRow = kingLocation[0];
+        int kingCol = kingLocation[1];
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = board[i][j];
+                if (piece == null) continue;
+                if (piece.getColor() == turn) continue;
+                if (piece.isValidMove(i, j, kingRow, kingCol, this)) {
+                    // Get piece that puts king in check
+                    System.out.println(getPiece(i, j).getPieceType() + " at " + i + ", " + j + " can take the king at " + kingRow + ", " + kingCol);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
