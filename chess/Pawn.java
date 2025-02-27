@@ -16,7 +16,89 @@ public class Pawn extends Piece {
     }
 
     public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
-        return true;
+        
+        int rowDiff = endRow - startRow;
+        int colDiff = endCol - startCol;
+
+        if (color == Player.white) 
+        {
+            // Move straight
+            if (colDiff == 0) 
+            { 
+                // 1 move forward
+                if (rowDiff == 1 && board.getPiece(endRow, endCol) == null) 
+                {
+                    return true;
+                } 
+                
+                // 2 moves from starting position
+                else if (rowDiff == 2 && startRow == 6 && board.getPiece(endRow, endCol) == null && board.getPiece(endRow - 1, endCol) == null) 
+                {
+
+                    return true;
+                }
+            } 
+            // Capture
+            else if (Math.abs(colDiff) == 1 && rowDiff == 1) 
+            { 
+            
+                if (board.getPiece(endRow, endCol) != null && board.getPiece(endRow, endCol).getColor() == Player.black) 
+                {
+                    return true;
+                }
+
+                // En Passant for White Pawn
+                if (board.getPiece(endRow - 1, endCol) instanceof Pawn) 
+                {
+                    Pawn adjacentPawn = (Pawn) board.getPiece(endRow - 1, endCol);
+                    
+                    if (adjacentPawn.getPieceType() == PieceType.BP && adjacentPawn.getEnpassant()) 
+                    {
+                        return true;
+                    }
+                
+                }
+            }
+        } 
+        
+        // Black pawn
+        else 
+        { 
+            if (colDiff == 0) 
+            { 
+                if (rowDiff == -1 && board.getPiece(endRow, endCol) == null) 
+                { 
+                    return true;
+                } 
+                
+                else if (rowDiff == -2 && startRow == 1 && board.getPiece(endRow, endCol) == null && board.getPiece(endRow + 1, endCol) == null)
+                { 
+                    return true;
+                }
+
+            }
+            
+            else if (Math.abs(colDiff) == 1 && rowDiff == -1) 
+            { 
+            
+                if (board.getPiece(endRow, endCol) != null && board.getPiece(endRow, endCol).getColor() == Player.white) 
+                {
+                    return true;
+                }
+                
+                
+                if (board.getPiece(endRow + 1, endCol) instanceof Pawn) 
+                {
+                    Pawn adjacentPawn = (Pawn) board.getPiece(endRow + 1, endCol);
+                    
+                    if (adjacentPawn.getPieceType() == PieceType.WP && adjacentPawn.getEnpassant()) 
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -26,7 +108,27 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean pathIsBlocked(int startRow, int startCol, int endRow, int endCol, Board board) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isBlocked'");
+        
+        if (endCol == startCol) 
+        {
+            int rowDirection = (endRow > startRow) ? 1 : -1;
+        
+            for (int i = startRow + rowDirection; i != endRow; i += rowDirection) 
+            {
+                if (board.getPiece(i, startCol) != null) 
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setEnpassant(boolean enpassant) {
+        this.enpassant = enpassant;
+    }
+
+    public boolean getEnpassant() {
+        return this.enpassant;
     }
 }

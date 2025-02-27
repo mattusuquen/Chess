@@ -1,11 +1,13 @@
 package chess;
 
+import chess.Chess.Player;
 import java.util.ArrayList;
 
 import chess.Chess.Player;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.ReturnPlay.Message;
+import java.lang.annotation.Target;
 
 public class Board {
 
@@ -106,31 +108,55 @@ public class Board {
     }
 
     public Message movePiece(int startRow, int startCol, int endRow, int endCol){
-        Piece pieceToMove = getPiece(startRow, startCol);r
-        // Change the ordering on this
-        // Just general idea
-        if (pieceToMove == null) return Message.ILLEGAL_MOVE;                                               // check if there is a piece to move
-        if (!pieceToMove.isTurn(this)) return Message.ILLEGAL_MOVE;                                         // check if it is the turn of the piece
-        if (!pieceToMove.isValidMove(startRow, startCol, endRow, endCol, this)) return Message.ILLEGAL_MOVE;// check if move is valid
-        if (board[endRow][endCol] != null &&                                                                // check if the piece is trying to take its own piece
-            board[endRow][endCol].getColor() == pieceToMove.getColor()) return Message.ILLEGAL_MOVE;
+        Piece pieceToMove = getPiece(startRow, startCol);
 
-        // if not, move piece
-        board[startRow][startCol] = null;
-        board[endRow][endCol] = pieceToMove;
-        pieceToMove.move(); // increment move counter
+        //1. Check if piece exists
+        if(pieceToMove == null) return Message.ILLEGAL_MOVE; 
 
-        // Turn successful, change turn
-        turn = turn == Player.white ? Player.black : Player.white;
+        //2. Check PLayer Turn 
+        if(!pieceToMove.isTurn(this)) return  Message.ILLEGAL_MOVE; 
+
+        //3. Check move validity 
+        if(!pieceToMove.isValidMove(startRow, startCol, endRow, endCol, this)) return  Message.ILLEGAL_MOVE;
+
+        //4. Check if Piece is attacking its own 
+        Piece target = getPiece(endRow, endCol);
+        if(target != null && target.getColor() == pieceToMove.getColor())  return Message.ILLEGAL_MOVE; 
+
+        //5. En Passant
+
         
-        if (isCheckmate()) return turn == Player.white ? Message.CHECKMATE_BLACK_WINS : Message.CHECKMATE_WHITE_WINS;
+        //6. Castling 
+
+
+        //7. Move piece 
+
+        board[startRow][startCol] = null; 
+        board[endRow][endCol] = pieceToMove;
+        pieceToMove.move();
+
+        //8. Pawn Promotion 
+        if (pieceToMove instanceof Pawn && (endRow == 0 || endRow == 7)) 
+        {
+            board[endRow][endCol] = new Queen(pieceToMove.getColor()); 
+        }
+
+        //9. Change turn
+        turn = (turn == Player.white) ? Player.black : Player.white; 
+
+        //10. Check Game End 
+        if (isCheckmate()) return (turn == Player.white) ? Message.CHECKMATE_BLACK_WINS : Message.CHECKMATE_WHITE_WINS;
         if (isStalemate()) return Message.STALEMATE;
         if (isDraw()) return Message.DRAW;
         if (isInCheck()) return Message.CHECK;
         
+        //11. Move Complete 
+        return  null; 
 
-        // Piece was moved successfully
-        return null;
+
+        
+        
+
     }
 
     private int[] findPiece(PieceType pieceType){
