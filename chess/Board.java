@@ -2,12 +2,9 @@ package chess;
 
 import chess.Chess.Player;
 import java.util.ArrayList;
-
-import chess.Chess.Player;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.ReturnPlay.Message;
-import java.lang.annotation.Target;
 
 public class Board {
 
