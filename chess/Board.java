@@ -14,7 +14,7 @@ public class Board {
     private Player turn = Player.white;
     private static final int NOT_FOUND = -1;
     Piece[][] board;
-    
+    private Piece prevPiece;
     public Board(){
         board = new Piece[8][8];
         initializeBoard();
@@ -121,7 +121,7 @@ public class Board {
 
         //4. Check if Piece is attacking its own 
         Piece target = getPiece(endRow, endCol);
-        if(target != null && target.getColor() == pieceToMove.getColor())  return Message.ILLEGAL_MOVE; 
+        if(target != null && target.getColor() == pieceToMove.getColor()) return Message.ILLEGAL_MOVE; 
 
         //5. En Passant
 
@@ -134,6 +134,7 @@ public class Board {
         board[startRow][startCol] = null; 
         board[endRow][endCol] = pieceToMove;
         pieceToMove.move();
+        prevPiece = pieceToMove;
 
         //8. Pawn Promotion 
         if (pieceToMove instanceof Pawn && (endRow == 0 || endRow == 7)) 
@@ -151,14 +152,16 @@ public class Board {
         if (isInCheck()) return Message.CHECK;
         
         //11. Move Complete 
-        return  null; 
+        return null; 
 
 
         
         
 
     }
-
+    public Piece getPrevPiece(){
+        return prevPiece;
+    }
     private int[] findPiece(PieceType pieceType){
         int[] location = new int[2];
 
