@@ -204,6 +204,7 @@ public class Board {
                     for (int y = 0; y < 8; y++) {
                         if (piece.isValidMove(i, j, x, y, this)) {
                             Piece original = board[x][y]; // Store captured piece if any
+                            if (original != null && original.getColor() == turn) continue; // Cannot capture own piece
                             board[x][y] = piece;
                             board[i][j] = null; // Move piece temporarily
     
@@ -250,7 +251,6 @@ public class Board {
         int[] kingLocation = findPiece(turn == Player.white ? PieceType.WK : PieceType.BK);
         int kingRow = kingLocation[0];
         int kingCol = kingLocation[1];
-
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Piece piece = board[i][j];

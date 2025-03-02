@@ -20,7 +20,6 @@ public class Knight extends Piece {
 
 
     public boolean isValidMove(int startRow, int startCol, int endRow, int endCol, Board board) {
-        
         int rowDiff = Math.abs(endRow - startRow);
         int colDiff = Math.abs(endCol - startCol);
 
