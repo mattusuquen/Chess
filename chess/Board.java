@@ -130,12 +130,15 @@ public class Board {
 
 
         //7. Move piece 
-
         board[startRow][startCol] = null; 
         board[endRow][endCol] = pieceToMove;
         pieceToMove.move();
 
         //8. Pawn Promotion 
+        // Check if we have input from Chess 
+        // Chess Returns letter 
+        // cast letter into piece 
+         
         if (pieceToMove instanceof Pawn && (endRow == 0 || endRow == 7)) 
         {
             board[endRow][endCol] = new Queen(pieceToMove.getColor()); 
@@ -147,7 +150,9 @@ public class Board {
         //10. Check Game End 
         if (isCheckmate()) return (turn == Player.white) ? Message.CHECKMATE_BLACK_WINS : Message.CHECKMATE_WHITE_WINS;
         if (isStalemate()) return Message.STALEMATE;
+        
         if (isDraw()) return Message.DRAW;
+        
         if (isInCheck()) return Message.CHECK;
         
         //11. Move Complete 

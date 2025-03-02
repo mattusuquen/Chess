@@ -124,6 +124,11 @@ public class Pawn extends Piece {
         return false;
     }
 
+
+
+
+
+    
     public void setEnpassant(boolean enpassant) {
         this.enpassant = enpassant;
     }
