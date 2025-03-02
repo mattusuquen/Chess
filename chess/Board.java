@@ -128,10 +128,17 @@ public class Board {
 
 
         //7. Move piece 
+        Piece tempPiece = board[endRow][endCol];
         board[startRow][startCol] = null; 
         board[endRow][endCol] = pieceToMove;
-        pieceToMove.move();
-        prevPiece = pieceToMove;
+        if (isInCheck()){
+            board[startRow][startCol] = pieceToMove;
+            board[endRow][endCol] = tempPiece;
+            return Message.ILLEGAL_MOVE;
+        } else {
+            pieceToMove.move();
+            prevPiece = pieceToMove;
+        }
 
         //8. Pawn Promotion 
         // Check if we have input from Chess 
