@@ -1,9 +1,5 @@
 package chess;
 
-import chess.ReturnPlay.Message;
-
-// @author Matthew Usuquen, 
-
 public class Chess {
 
     enum Player { white, black }
@@ -28,9 +24,18 @@ public class Chess {
 			int startCol = getMove(move)[0];
 			int endRow = getMove(move)[3];
 			int endCol = getMove(move)[2];
+
+			String promotion = "";
+
+			if((endRow == 0 || endRow == 7) && move.length() == 7)
+			{
+				promotion = move.substring(6).toUpperCase();
+				System.err.println("Promotion:" + promotion);
+			}
+
 			
 			ReturnPlay returnPlay = new ReturnPlay();
-			returnPlay.message = board.movePiece(startRow, startCol, endRow, endCol);
+			returnPlay.message = board.movePiece(startRow, startCol, endRow, endCol, promotion);
 			returnPlay.piecesOnBoard = board.getPieces();
 			return returnPlay;
 		}
@@ -43,7 +48,13 @@ public class Chess {
 			moveArray[3] = move.charAt(4) - '1';
 			return moveArray;
 		}
-		public String getPromotion(){
+		public String getPromotion(String move){
+
+			if(move.length() == 7)
+			{
+				return move.charAt(6) + ""; 
+			}
+			
 			return "Q";
 		}
 

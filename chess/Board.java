@@ -1,10 +1,10 @@
 package chess;
 
 import chess.Chess.Player;
-import java.util.ArrayList;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.ReturnPlay.Message;
+import java.util.ArrayList;
 
 public class Board {
 
@@ -45,6 +45,7 @@ public class Board {
     }
 
     public Piece getPiece(int row, int col){
+        
         return board[row][col];
     }
 
@@ -104,7 +105,7 @@ public class Board {
         board[row][col] = piece;
     }
 
-    public Message movePiece(int startRow, int startCol, int endRow, int endCol){
+    public Message movePiece(int startRow, int startCol, int endRow, int endCol, String promotion){
         Piece pieceToMove = getPiece(startRow, startCol);
 
         //1. Check if piece exists
@@ -136,10 +137,29 @@ public class Board {
         // Check if we have input from Chess 
         // Chess Returns letter 
         // cast letter into piece 
-         
-        if (pieceToMove instanceof Pawn && (endRow == 0 || endRow == 7)) 
+
+        if (pieceToMove instanceof Pawn && (endRow == 0 || endRow == 7))
         {
-            board[endRow][endCol] = new Queen(pieceToMove.getColor()); 
+            Piece promotedPiece; 
+            System.out.println("Promotion movePiece: "+ promotion);
+            switch (promotion.toUpperCase()) 
+            {
+                case "R":
+                    promotedPiece = new Rook(pieceToMove.getColor());
+                    break;
+                
+                case "N":
+                    promotedPiece = new Knight(pieceToMove.getColor());
+                    break;
+                case "B":
+                    promotedPiece= new Bishop(pieceToMove.getColor());
+                    break; 
+                default:
+                    promotedPiece = new Queen(pieceToMove.getColor());
+                    break; 
+            }
+
+            board[endRow][endCol] = promotedPiece; 
         }
 
         //9. Change turn
@@ -251,6 +271,7 @@ public class Board {
         int[] kingLocation = findPiece(turn == Player.white ? PieceType.WK : PieceType.BK);
         int kingRow = kingLocation[0];
         int kingCol = kingLocation[1];
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Piece piece = board[i][j];
