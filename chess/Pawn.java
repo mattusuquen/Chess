@@ -32,9 +32,8 @@ public class Pawn extends Piece {
                 } 
                 
                 // 2 moves from starting position
-                else if (rowDiff == 2 && startRow == 6 && board.getPiece(endRow, endCol) == null && board.getPiece(endRow - 1, endCol) == null) 
+                else if (rowDiff == 2 && startRow == 1 && board.getPiece(endRow, endCol) == null && board.getPiece(endRow - 1, endCol) == null) 
                 {
-
                     return true;
                 }
             } 
@@ -48,15 +47,13 @@ public class Pawn extends Piece {
                 }
 
                 // En Passant for White Pawn
-                if (board.getPiece(endRow - 1, endCol) instanceof Pawn) 
+                if (board.getPiece(endRow - 1, endCol) instanceof Pawn 
+                        && board.getPiece(endRow - 1, endCol).getColor() == Player.black
+                        && board.getPiece(endRow - 1, endCol) == board.getPrevPiece()
+                        && board.getPiece(endRow - 1, endCol).getMoves() == 1)
                 {
-                    Pawn adjacentPawn = (Pawn) board.getPiece(endRow - 1, endCol);
-                    
-                    if (adjacentPawn.getPieceType() == PieceType.BP && adjacentPawn.getEnpassant()) 
-                    {
-                        return true;
-                    }
-                
+                    board.setPiece(endRow - 1, endCol, null);
+                    return true;
                 }
             }
         } 
@@ -71,7 +68,7 @@ public class Pawn extends Piece {
                     return true;
                 } 
                 
-                else if (rowDiff == -2 && startRow == 1 && board.getPiece(endRow, endCol) == null && board.getPiece(endRow + 1, endCol) == null)
+                else if (rowDiff == -2 && startRow == 6 && board.getPiece(endRow, endCol) == null && board.getPiece(endRow + 1, endCol) == null)
                 { 
                     return true;
                 }
@@ -87,14 +84,13 @@ public class Pawn extends Piece {
                 }
                 
                 
-                if (board.getPiece(endRow + 1, endCol) instanceof Pawn) 
+                if (board.getPiece(endRow + 1, endCol) instanceof Pawn 
+                        && board.getPiece(endRow + 1, endCol).getColor() == Player.white
+                        && board.getPiece(endRow + 1, endCol) == board.getPrevPiece()
+                        && board.getPiece(endRow + 1, endCol).getMoves() == 1)
                 {
-                    Pawn adjacentPawn = (Pawn) board.getPiece(endRow + 1, endCol);
-                    
-                    if (adjacentPawn.getPieceType() == PieceType.WP && adjacentPawn.getEnpassant()) 
-                    {
-                        return true;
-                    }
+                    board.setPiece(endRow + 1, endCol, null);
+                    return true;
                 }
             }
         }

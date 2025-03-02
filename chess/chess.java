@@ -43,6 +43,13 @@ public class Chess {
 			moveArray[3] = move.charAt(4) - '1';
 			return moveArray;
 		}
+		public String getPromotion(){
+			return "Q";
+		}
+
+		public boolean isDraw(){
+			return false;
+		}
 		
 		/**
 		 * This method should reset the game, and start from scratch.

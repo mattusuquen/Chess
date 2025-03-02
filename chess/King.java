@@ -44,7 +44,7 @@ public class King extends Piece {
                     if (pathIsBlocked(7, 0, 7, 4, board)) return false;
                     board.getPiece(7, 0).move();
                     board.movePiece(7, 0, 7, 3);
-                    board.setTurn(Player.black);
+                    board.setTurn(Player.white);
                     return true;
                 }
                 if (endRow == 7 && endCol == 6){
@@ -54,7 +54,7 @@ public class King extends Piece {
                     if (pathIsBlocked(7, 7, 7, 4, board)) return false;
                     board.getPiece(7, 7).move();
                     board.movePiece(7, 7, 7, 5);
-                    board.setTurn(Player.black);
+                    board.setTurn(Player.white);
                     return true;
                 }
             }
