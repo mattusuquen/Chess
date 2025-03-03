@@ -25,6 +25,7 @@ public class Chess {
 			int endRow = getMove(move)[3];
 			int endCol = getMove(move)[2];
 
+			boolean drawRequest = false; 
 			String promotion = "";
 
 			if((endRow == 0 || endRow == 7) && move.length() == 7)
@@ -33,9 +34,13 @@ public class Chess {
 				System.err.println("Promotion:" + promotion);
 			}
 
+			if (move.endsWith(" draw?"))
+			{
+				drawRequest = true; 
+			}
 			
 			ReturnPlay returnPlay = new ReturnPlay();
-			returnPlay.message = board.movePiece(startRow, startCol, endRow, endCol, promotion);
+			returnPlay.message = board.movePiece(startRow, startCol, endRow, endCol, promotion,drawRequest);
 			returnPlay.piecesOnBoard = board.getPieces();
 			return returnPlay;
 		}

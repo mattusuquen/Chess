@@ -105,7 +105,7 @@ public class Board {
         board[row][col] = piece;
     }
 
-    public Message movePiece(int startRow, int startCol, int endRow, int endCol, String promotion){
+    public Message movePiece(int startRow, int startCol, int endRow, int endCol, String promotion, boolean drawRequest){
         Piece pieceToMove = getPiece(startRow, startCol);
 
         //1. Check if piece exists
@@ -176,7 +176,11 @@ public class Board {
         if (isCheckmate()) return (turn == Player.white) ? Message.CHECKMATE_BLACK_WINS : Message.CHECKMATE_WHITE_WINS;
         if (isStalemate()) return Message.STALEMATE;
         
-        if (isDraw()) return Message.DRAW;
+        if(drawRequest)
+        {
+            return Message.DRAW;
+        }
+        
         
         if (isInCheck()) return Message.CHECK;
         

@@ -22,7 +22,7 @@ public class King extends Piece {
                     if (board.getPiece(0, 0).getPieceType() != PieceType.WR) return false;
                     if (pathIsBlocked(0, 0, 0, 4, board)) return false;
                     board.getPiece(0, 0).move();
-                    board.movePiece(0, 0, 0, 3,"");
+                    board.movePiece(0, 0, 0, 3,"",false);
                     board.setTurn(Player.black);
                     return true;
                 }
@@ -32,7 +32,7 @@ public class King extends Piece {
                     if (board.getPiece(0, 7).getPieceType() != PieceType.WR) return false;
                     if (pathIsBlocked(0, 7, 0, 4, board)) return false;
                     board.getPiece(0, 7).move();
-                    board.movePiece(0, 7, 0, 5,"");
+                    board.movePiece(0, 7, 0, 5,"",false);
                     board.setTurn(Player.black);
                     return true;
                 }
@@ -43,7 +43,7 @@ public class King extends Piece {
                     if (board.getPiece(7, 0).getPieceType() != PieceType.BR) return false;
                     if (pathIsBlocked(7, 0, 7, 4, board)) return false;
                     board.getPiece(7, 0).move();
-                    board.movePiece(7, 0, 7, 3,"");
+                    board.movePiece(7, 0, 7, 3,"",false);
                     board.setTurn(Player.white);
                     return true;
                 }
@@ -53,7 +53,7 @@ public class King extends Piece {
                     if (board.getPiece(7, 7).getPieceType() != PieceType.BR) return false;
                     if (pathIsBlocked(7, 7, 7, 4, board)) return false;
                     board.getPiece(7, 7).move();
-                    board.movePiece(7, 7, 7, 5,"");
+                    board.movePiece(7, 7, 7, 5,"",false);
                     board.setTurn(Player.white);
                     return true;
                 }
