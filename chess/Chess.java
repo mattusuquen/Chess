@@ -20,6 +20,14 @@ public class Chess {
 			
 			/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 			/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
+
+			if (move.equals("resign"))
+			{
+				ReturnPlay returnPlay = new ReturnPlay();
+				returnPlay.message = board.getTurn() == Player.white ? ReturnPlay.Message.RESIGN_BLACK_WINS : ReturnPlay.Message.RESIGN_WHITE_WINS;
+				returnPlay.piecesOnBoard = board.getPieces();
+				return returnPlay;
+			}
 			int startRow = getMove(move)[1];
 			int startCol = getMove(move)[0];
 			int endRow = getMove(move)[3];
